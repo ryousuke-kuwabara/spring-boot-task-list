@@ -20,6 +20,10 @@ public class SecutiryConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/tasks", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll())
 
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
