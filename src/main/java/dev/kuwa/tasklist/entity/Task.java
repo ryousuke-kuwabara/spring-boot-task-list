@@ -28,6 +28,9 @@ public class Task {
     private boolean completed;
     private LocalDate dueDate;
 
+    @Column(length = 64)
+    private String details;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

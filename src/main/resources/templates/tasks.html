@@ -48,8 +48,9 @@
           <div class="card-body">
             <form th:action="@{/tasks}" th:object="${newTask}" method="post" class="mb-4">
               <div class="input-group">
-                <input type="text" th:field="*{title}" class="form-control" placeholder="新しいタスクを追加..." required>
+                <input type="text" th:field="*{title}" class="form-control" placeholder="新しいタスク名" required>
                 <input type="date" th:field="*{dueDate}" class="form-control">
+                <input type="text" th:field="*{details}" class="form-control" placeholder="タスクの詳細">
                 <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg"></i>追加</button>  
               </div>
             </form>
@@ -62,7 +63,17 @@
                 </form>
                 <div>
                   <span th:text="${task.title}" th:classappend="${task.completed} ? 'completed'">タスク名</span>
-                  <div th:if="${task.dueDate}" class="small text-muted" th:text="'期限: ' + ${#temporals.format(task.dueDate, 'yyyy-MM-dd')}"></div>
+                  <div class="small text-muted d-flex align-items-center">
+                    <div th:if="${task.dueDate}">
+                      <i class="bi bi-calendar-event"></i>
+                      <span th:text="' ' + ${#temporals.format(task.dueDate, 'yyyy-MM-dd')}"></span>
+                    </div>
+                    <div th:if="${task.dueDate != null and !#strings.isEmpty(task.details)}" class="border-start mx-2" style="height: 1rem"></div>
+                    <div th:if="${!#strings.isEmpty(task.details)}">
+                      <i class="bi bi-card-text"></i>
+                      <span th:text="' ' + ${task.details}"</span>
+                    </div>
+                  </div>
                 </div>
               </div>
                 <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post">
